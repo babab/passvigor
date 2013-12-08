@@ -18,6 +18,12 @@ $(document).ready(function() {
     function passvigor(password)
     {
         var passlenreq = 9;
+        var maxstrength = 299;
+        var ret = {
+            'valid': false,
+            'points': 0,
+            'message': null
+        };
 
         function relscore(password)
         {
@@ -39,52 +45,45 @@ $(document).ready(function() {
 
         }
 
-        if ($.inArray(password, passvigor_wordlist) != -1)
-            return {
-                'valid': false,
-                'points': 0,
-                'message': 'Unsecure password: very commonly used.'
-            };
+        if ($.inArray(password, passvigor_wordlist) != -1) {
+            ret['message'] = 'Unsecure password: very commonly used.';
+            return ret;
+        }
         else {
-            if (password.length == 0)
-                return {
-                    'valid': false,
-                    'points': 0,
-                    'message': 'Enter a password.'
-                };
+            if (password.length == 0) {
+                ret['message'] = 'Enter a password.';
+                return ret;
+            }
 
             var relp = relscore(password);
             var currp = Math.round((password.length / passlenreq) * 100);
             var points = 0;
-            if (currp > (relp * 100))
+            if (relp < 1 && currp > (relp * 100))
                 points = Math.round(relp * 100);
             else
                 points = Math.ceil(currp * relp);
 
+            if (points >= (maxstrength + 1))
+                points = maxstrength;
+
+            ret['points'] = points;
+
             if (points < 100) {
-                if (relp >= 1)
-                    return {
-                        'valid': false,
-                        'points': points,
-                        'message': 'Still need '
-                            + (passlenreq - password.length) + ' chars.'
-                    };
+                if (relp >= 1) {
+                    ret['message'] = 'Still need '
+                            + (passlenreq - password.length) + ' chars.';
+                    return ret;
+                }
                 else if (passlenreq <= password.length) {
-                    return {
-                        'valid': false,
-                        'points': points,
-                        'message': 'Make sure to use digits and lower- &amp; '
-                            + 'uppercase characters.'
-                    };
+                    ret['message'] = 'Make sure to use digits and lower- '
+                        +'&amp; uppercase characters.';
+                    return ret;
                 }
                 else {
-                    return {
-                        'valid': false,
-                        'points': points,
-                        'message': 'Make sure to use digits and lower- &amp; '
-                            + 'uppercase characters. Still need '
-                            + (passlenreq - password.length) + ' chars.'
-                    };
+                    ret['message'] = 'Make sure to use digits and lower- '
+                        + '&amp; uppercase characters. Still need '
+                        + (passlenreq - password.length) + ' chars.';
+                    return ret;
                 }
             }
             else
