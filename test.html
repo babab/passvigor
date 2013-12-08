@@ -21,9 +21,9 @@
 
     <div id="container">
       <input type="password" id="password" />
-      Strength = <span id="passvigor-points">0%</span>
-      <div id="strength-bar">
-      </div>
+      Strength = <span id="passvigor-points">0</span>%
+
+      <div id="strength-bar"></div>
       <hr />
       <span id="passvigor-msg">Enter a password</span>
     </div>
@@ -37,9 +37,9 @@
 
         $('#password').on('input', function () {
           var check = passvigor($('#password').val());
-          $('#passvigor-msg').html(check['message']);
-          $('#passvigor-points').html(check['points'] + '%');
 
+          $('#passvigor-msg').html(check['message']);
+          $('#passvigor-points').html(check['points']);
           bar.progressbar('value', check['points']);
         });
 
