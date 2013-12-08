@@ -20,7 +20,9 @@
   <body>
 
     <div id="container">
+      <h1>passvigor (example)</h1>
       <input type="password" id="password" />
+      <input type="submit" id="submit" value="Ok" />
       Strength = <span id="passvigor-points">0</span>%
 
       <div id="strength-bar"></div>
@@ -34,6 +36,7 @@
       $(document).ready(function() {
 
         var bar = $('#strength-bar').progressbar({value: 0});
+        $('#submit').attr('disabled', 'disabled');
 
         $('#password').on('input', function () {
           var check = passvigor($('#password').val());
@@ -41,6 +44,11 @@
           $('#passvigor-msg').html(check['message']);
           $('#passvigor-points').html(check['points']);
           bar.progressbar('value', check['points']);
+
+          if (check['valid'])
+            $('#submit').removeAttr('disabled');
+          else
+            $('#submit').attr('disabled', 'disabled');
         });
 
       });
