@@ -2,26 +2,49 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js">
-    </script>
+    <link rel="stylesheet"
+          href="http://code.jquery.com/ui/1.10.3/themes/start/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <style>
       #container {
         padding-top: 100px;
         margin-left: auto;
         margin-right: auto;
         width: 500px;
+        line-height: 50px;
       }
     </style>
     <title>passvigor example</title>
   </head>
   <body>
+
     <div id="container">
       <input type="password" id="password" />
       Strength = <span id="passvigor-points">0%</span>
+      <div id="strength-bar">
+      </div>
       <hr />
       <span id="passvigor-msg">Enter a password</span>
-      <script src="passvigor-wordlist.js"></script>
-      <script src="passvigor-main.js"></script>
     </div>
+
+    <script src="passvigor-wordlist.js"></script>
+    <script src="passvigor-main.js"></script>
+    <script>
+      $(document).ready(function() {
+
+        var bar = $('#strength-bar').progressbar({value: 0});
+
+        $('#password').on('input', function () {
+          var check = passvigor($('#password').val());
+          $('#passvigor-msg').html(check['message']);
+          $('#passvigor-points').html(check['points'] + '%');
+
+          bar.progressbar('value', check['points']);
+        });
+
+      });
+    </script>
+
   </body>
 </html>
