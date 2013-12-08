@@ -9,7 +9,7 @@ allow their usage.
 
 passvigor is in very early development, but can already be used for
 front-end validating of passwords. To see an example, look at the
-source-code of ``test.html``.
+source-code of ``example.html``.
 
 ## license
 
