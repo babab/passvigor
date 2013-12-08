@@ -1,3 +1,7 @@
+// This passwordlist of the 10k most used passes is licensed under an
+// "Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)" license and is
+// created by Mark Burnett (xato.net).
+
 passvigor_wordlist = [
 '??????', '?????', '****', '*****', '******', '0000', '0.0.000',
 '00000', '0.0.0.000', '000000', '0000007', '000001', '000007', '0001',
