@@ -2,17 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Jura">
     <link rel="stylesheet"
           href="http://code.jquery.com/ui/1.10.3/themes/start/jquery-ui.css">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <style>
+      body { font-family: "Jura", sans-serif; }
       #container {
         padding-top: 100px;
         margin-left: auto;
         margin-right: auto;
-        width: 500px;
-        line-height: 50px;
+        width: 450px;
       }
     </style>
     <title>passvigor example</title>
@@ -20,15 +21,27 @@
   <body>
 
     <div id="container">
+
       <h1>passvigor (example)</h1>
+      <p>
+        passvigor is a password strength validator for web applications.
+        Rating of passwords is done according to length and variation of
+        characters. It detects the 10k most commonly used passwords and
+        doesn't allow their usage.
+      </p>
       <input type="password" id="password" />
       <input type="submit" id="submit" value="Ok" />
       Strength = <span id="passvigor-points">0</span>%
+      <p>&nbsp;</p>
 
       <div id="strength-bar"></div>
-      <hr />
       <span id="passvigor-msg">Enter a password</span>
     </div>
+    <a href="https://github.com/babab/passvigor">
+      <img style="position: absolute; top: 0; right: 0; border: 0;"
+           src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+           alt="Fork me on GitHub" />
+    </a>
 
     <script src="passvigor-wordlist.js"></script>
     <script src="passvigor-main.js"></script>
