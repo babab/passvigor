@@ -1,20 +1,36 @@
-# passvigor
+passvigor
+==============================================================================
 
-passvigor is a password strength validator for web applications.
-Rating of passwords is done according to length and variation of
-characters. It detects the 10k most commonly used passwords and doesn't
-allow their usage.
+passvigor is a
+`password strength <http://en.wikipedia.org/wiki/Password_strength>`_
+validator for web applications. Rating of passwords is done according
+to length and variation of characters. It detects the 10k most commonly
+used passwords and doesn't allow their usage.
 
-## usage
+usage
+-----
 
 passvigor is in very early development, but can already be used for
 front-end validating of passwords. To see an example, look at the
-source-code of ``example.html``.
+source code of ``example.html``.
 
-## license
+how it works
+------------
+
+A password is considered valid if the following conditions are met:
+
+1. The password is not on the `10k most used passes list <https://github.com/babab/passvigor/blob/master/passvigor-wordlist.js>`_.
+2. The length of the password is 9 characters or more.
+3. The password consists of either:
+
+   - Uppercase and lowercase chars and numerals 0-9
+   - Uppercase and lowercase chars and special chars (including space): !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+
+license
+-------
 
 All code and files of passvigor (except for the passwordlist) is
-licensed as follows:
+licensed as follows::
 
     /*
      * Copyright (c) 2013  Benjamin Althues <benjamin@babab.nl>
