@@ -34,6 +34,13 @@
       Strength = <span id="passvigor-points">0</span>%
       <p>&nbsp;</p>
 
+      <p>
+        Lowercase detected: <span id="passvigor-lowercase">No</span><br />
+        Uppercase detected: <span id="passvigor-uppercase">No</span><br />
+        Numerals detected: <span id="passvigor-numerals">No</span><br />
+        Specialchars detected: <span id="passvigor-specialchars">No</span>
+      </p>
+
       <div id="strength-bar"></div>
       <span id="passvigor-msg">Enter a password</span>
     </div>
@@ -55,6 +62,20 @@
           var check = passvigor($('#password').val());
 
           $('#passvigor-msg').html(check['message']);
+
+          $('#passvigor-lowercase').html(function() {
+            if (check['score']['lowercase']) return 'Yes'; else return 'No';
+          });
+          $('#passvigor-uppercase').html(function() {
+            if (check['score']['uppercase']) return 'Yes'; else return 'No';
+          });
+          $('#passvigor-numerals').html(function() {
+            if (check['score']['numerals']) return 'Yes'; else return 'No';
+          });
+          $('#passvigor-specialchars').html(function() {
+            if (check['score']['specialchars']) return 'Yes'; else return 'No';
+          });
+
           $('#passvigor-points').html(check['points']);
           bar.progressbar('value', check['points']);
 

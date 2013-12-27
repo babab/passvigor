@@ -21,19 +21,49 @@ function passvigor(password)
     var ret = {
         'valid': false,
         'points': 0,
+        'score': {},
         'message': null
     };
 
-    function relscore(password)
+    function score(password)
     {
+        /*
+         * score calculates a relative score for the strength of the
+         * password. It returns a factor somewhere between 0 - 1.
+         *
+         * Special chars (including space):  !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+         */
+
         var validsum = 26 + 26 + 10;
         var factor = 0;
+        var lowercase = false;
+        var numerals = false;
+        var specialchars = false;
+        var uppercase = false;
 
-        if (/[a-z]/.test(password)) factor += 26 / validsum;
-        if (/[A-Z]/.test(password)) factor += 26 / validsum;
-        if (/[0-9]/.test(password)) factor += 10 / validsum;
-        if (/[!@#$%^&*()_]/.test(password)) factor +=  9 / validsum;
-        return factor;
+        if (/[a-z]/.test(password)) {
+            lowercase = true;
+            factor += 26 / validsum;
+        }
+        if (/[A-Z]/.test(password)) {
+            uppercase = true;
+            factor += 26 / validsum;
+        }
+        if (/[0-9]/.test(password)) {
+            numerals = true;
+            factor += 10 / validsum;
+        }
+        if (/[ !"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]/.test(password)) {
+            specialchars = true;
+            factor +=  10 / validsum;
+        }
+        return {
+            'factor': factor,
+            'lowercase': lowercase,
+            'uppercase': uppercase,
+            'numerals': numerals,
+            'specialchars': specialchars
+        };
     }
 
     if ($.inArray(password, passvigor_wordlist) != -1) {
@@ -46,7 +76,9 @@ function passvigor(password)
         return ret;
     }
 
-    var relp = relscore(password);
+    var score = score(password);
+    ret['score'] = score;
+    var relp = score['factor'];
     var currp = Math.round((password.length / passlenreq) * 100);
     var points = 0;
     if (relp < 1 && currp > (relp * 100))
@@ -81,6 +113,7 @@ function passvigor(password)
         return {
             'valid': true,
             'points': points,
+            'score': score,
             'message': 'Password is secure.'
         };
 }
